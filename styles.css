@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+header {
+  position: fixed;
+  top: -100px;
+  width: 100%;
+  background: #fff;
+  transition: top 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header.active {
+  top: 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+.hero {
+  height: 100vh;
+  background: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-section {
+  padding: 50px;
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+}
+
+.carousel-track {
+  display: flex;
+  overflow: hidden;
+  width: 80%;
+}
+
+.carousel-item {
+  min-width: 300px;
+  margin: 10px;
+}
+
+.carousel-item img {
+  width: 100%;
+  transition: transform 0.3s;
+}
+
+.carousel-item img:hover {
+  transform: scale(1.05);
+}
+
+.prev, .next {
+  cursor: pointer;
+  font-size: 30px;
+  background: none;
+  border: none;
+}
+
+.zoom-preview {
+  position: absolute;
+  right: 20px;
+  top: 50px;
+  width: 300px;
+  height: 300px;
+  border: 1px solid #ccc;
+  background-size: cover;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .carousel-track {
+    width: 100%;
+  }
+
+  .zoom-preview {
+    display: none;
+  }
+}
