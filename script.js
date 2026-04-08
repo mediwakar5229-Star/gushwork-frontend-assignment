@@ -1,51 +1,19 @@
-let lastScroll = 0;
-const header = document.getElementById("stickyHeader");
+// sticky
+window.addEventListener("scroll",()=>{header.style.top=scrollY>100?"0":"-60px"});
 
-window.addEventListener("scroll", () => {
-  let currentScroll = window.pageYOffset;
+// fade
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("show")})});
+document.querySelectorAll(".fade-in").forEach(el=>obs.observe(el));
 
-  if (currentScroll > window.innerHeight / 2) {
-    if (currentScroll > lastScroll) {
-      header.classList.remove("active");
-    } else {
-      header.classList.add("active");
-    }
-  } else {
-    header.classList.remove("active");
-  }
+// drag carousel
+const track=document.querySelector(".carousel-track");
+let isDown=false,startX,scrollLeft;
+track.addEventListener("mousedown",e=>{isDown=true;startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft});
+track.addEventListener("mouseleave",()=>isDown=false);
+track.addEventListener("mouseup",()=>isDown=false);
+track.addEventListener("mousemove",e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;const walk=(x-startX)*2;track.scrollLeft=scrollLeft-walk});
 
-  lastScroll = currentScroll;
-});
-
-const track = document.querySelector(".carousel-track");
-const items = document.querySelectorAll(".carousel-item");
-let index = 0;
-
-document.querySelector(".next").addEventListener("click", () => {
-  index++;
-  if (index >= items.length) index = 0;
-  updateCarousel();
-});
-
-document.querySelector(".prev").addEventListener("click", () => {
-  index--;
-  if (index < 0) index = items.length - 1;
-  updateCarousel();
-});
-
-function updateCarousel() {
-  track.style.transform = `translateX(-${index * 320}px)`;
-}
-
-const zoomPreview = document.getElementById("zoomPreview");
-
-document.querySelectorAll(".carousel-item img").forEach(img => {
-  img.addEventListener("mouseenter", () => {
-    zoomPreview.style.display = "block";
-    zoomPreview.style.backgroundImage = `url(${img.src})`;
-  });
-
-  img.addEventListener("mouseleave", () => {
-    zoomPreview.style.display = "none";
-  });
-});
+// onboarding
+const roles=document.querySelectorAll(".role");
+const btn=document.getElementById("continueBtn");
+roles.forEach(r=>r.addEventListener("click",()=>{roles.forEach(x=>x.classList.remove("active"));r.classList.add("active");btn.disabled=false}));
